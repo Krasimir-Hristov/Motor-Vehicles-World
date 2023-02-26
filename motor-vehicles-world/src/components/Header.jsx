@@ -38,8 +38,11 @@ export default function Header() {
            ${pathMatchRoute('/offers') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
            onClick={()=> navigate('/offers')} >Offers</li>
             <li className={`cursor-pointer py-3 text-lg font-bold text-white
-           ${pathMatchRoute('/sing-in') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
-           onClick={()=> navigate('/sing-in')} >Sing In</li>
+           ${pathMatchRoute('/sign-in') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
+           onClick={()=> navigate('/sign-in')} >Sign In</li>
+           <li className={`cursor-pointer py-3 text-lg font-bold text-white
+           ${pathMatchRoute('/sign-up') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
+           onClick={()=> navigate('/sign-up')} >Register</li>
           </ul>
         </div>
       </header>
