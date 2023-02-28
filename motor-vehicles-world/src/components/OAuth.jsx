@@ -17,14 +17,14 @@ export default function OAuth() {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters( {
-        prompt : "select_account",
+        prompt : 'select_account',
       });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
       //check user if existed 
 
-      const docRef = doc(db, "users", user.uid);
+      const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
 
       if(!docSnap.exists()) {
@@ -35,10 +35,10 @@ export default function OAuth() {
         });
       }
 
-      navigate("/");
+      navigate('/');
 
     } catch (error) {
-      toast.error("Could not authorize with Google");
+      toast.error('Could not authorize with Google');
     }
   }
 

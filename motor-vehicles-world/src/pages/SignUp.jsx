@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import OAuth from '../components/OAuth';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { db } from "../firebase.config";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { db } from '../firebase.config';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -42,11 +42,11 @@ export default function SignUp() {
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
 
-      await setDoc(doc(db, "users", user.uid), formDataCopy);
-      toast.success("Sing up was successfully")
-      navigate("/");
+      await setDoc(doc(db, 'users', user.uid), formDataCopy);
+      toast.success(`Welcome ${auth.currentUser.displayName} !`);
+      navigate('/');
     } catch (error) {
-      toast.error("Something went wrong with your registration")
+      toast.error('Something went wrong with your registration');
     }
   }
 
