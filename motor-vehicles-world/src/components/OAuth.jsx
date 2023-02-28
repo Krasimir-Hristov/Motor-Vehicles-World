@@ -33,7 +33,9 @@ export default function OAuth() {
           email: user.email,
           timestamp: serverTimestamp(),
         });
+        
       }
+      toast.success(`Welcome ${user.displayName} !`);
 
       navigate('/');
 
