@@ -43,7 +43,7 @@ export default function SignUp() {
       formDataCopy.timestamp = serverTimestamp();
 
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
-      toast.success(`Welcome ${auth.currentUser.displayName} !`);
+      toast.success(`Welcome ${user.displayName} !`);
       navigate('/');
     } catch (error) {
       toast.error('Something went wrong with your registration');
