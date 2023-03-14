@@ -1,9 +1,53 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function Header() {
 
+  const [pageState, setPageState] = useState('Sign in');
+  const [registerState, setRegisterState] = useState('Register');
+  const [loggedIn, setLoggedIn] = useState(true);
+
     const location = useLocation();
     const navigate = useNavigate();
+    const auth = getAuth();
+
+    useEffect( () => {
+      onAuthStateChanged(auth, (user) => {
+        if(user) {
+          setPageState('Profile');
+        } else {
+          setPageState('Sign in');
+        }
+      });
+    }, [auth]);
+
+    useEffect( () => {
+      onAuthStateChanged(auth, (user) => {
+        if(user) {
+          setRegisterState('Logout');
+        } else {
+          setRegisterState('Register');
+        }
+      });
+    }, [auth]);
+
+    useEffect( () => {
+      onAuthStateChanged(auth, (user) => {
+        if(user) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+        }
+      });
+    }, [auth]);
+
+    function onLogout() {
+
+      auth.signOut();
+      navigate("/sign-in");
+  
+    }
 
     function pathMatchRoute(route) {
       if(route === location.pathname) {
@@ -34,15 +78,19 @@ export default function Header() {
             <li className={`cursor-pointer py-3 text-lg font-bold text-white
            ${pathMatchRoute('/') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
            onClick={()=> navigate('/')} >Home</li>
+
             <li className={`cursor-pointer py-3 text-lg font-bold text-white
            ${pathMatchRoute('/offers') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
            onClick={()=> navigate('/offers')} >Offers</li>
+
             <li className={`cursor-pointer py-3 text-lg font-bold text-white
-           ${pathMatchRoute('/sign-in') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
-           onClick={()=> navigate('/sign-in')} >Sign In</li>
+           ${(pathMatchRoute('/sign-in') || pathMatchRoute('/profile')) 
+           && 'text-sm text-white-500 border-b-red-600 border-b-4'}`}
+           onClick={()=> navigate('/profile')} >{ pageState }</li>
+
            <li className={`cursor-pointer py-3 text-lg font-bold text-white
            ${pathMatchRoute('/sign-up') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
-           onClick={()=> navigate('/sign-up')} >Register</li>
+           onClick={loggedIn ? () => {onLogout()} : ()=> navigate('/sign-up')} >{ registerState }</li>
           </ul>
         </div>
       </header>

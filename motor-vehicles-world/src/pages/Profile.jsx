@@ -16,7 +16,7 @@ export default function Profile() {
   });
 
   const { name, email } = formData;
-  function onLogout() {
+   function onLogout() {
 
     auth.signOut();
     navigate("/");
