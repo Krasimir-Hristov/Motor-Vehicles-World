@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { getAuth, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase.config";
+import { useState } from 'react';
+import { getAuth, updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase.config';
 
 export default function Profile() {
   const auth = getAuth();
@@ -19,7 +19,7 @@ export default function Profile() {
    function onLogout() {
 
     auth.signOut();
-    navigate("/");
+    navigate('/');
 
   }
 
@@ -106,7 +106,7 @@ export default function Profile() {
                   className="text-red-600 hover:text-red-800 transition ease-in-out
               duration-200 ml-2 cursor-pointer"
                 >
-                  {changeDetail ? "Apply change" : "Edit"}
+                  {changeDetail ? 'Apply change' : 'Edit'}
                 </span>
               </p>
 

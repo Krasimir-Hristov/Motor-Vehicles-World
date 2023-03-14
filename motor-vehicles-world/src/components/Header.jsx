@@ -45,7 +45,7 @@ export default function Header() {
     function onLogout() {
 
       auth.signOut();
-      navigate("/sign-in");
+      navigate('/sign-in');
   
     }
 
@@ -59,7 +59,7 @@ export default function Header() {
   return (
     <div
       className="text-white bg-black  border-b-2 border-red-700 shadow-sm sticky top-0 
-    z-50"
+    z-40"
     >
       <header
         className="flex justify-between items-center 
@@ -90,7 +90,7 @@ export default function Header() {
 
            <li className={`cursor-pointer py-3 text-lg font-bold text-white
            ${pathMatchRoute('/sign-up') && 'text-sm text-teal-500 border-b-4 border-b-red-600'}`}
-           onClick={loggedIn ? () => {onLogout()} : ()=> navigate('/sign-up')} >{ registerState }</li>
+           onClick={loggedIn ? () => {onLogout();} : ()=> navigate('/sign-up')} >{ registerState }</li>
           </ul>
         </div>
       </header>
