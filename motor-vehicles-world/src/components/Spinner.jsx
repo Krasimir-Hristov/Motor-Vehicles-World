@@ -8,5 +8,5 @@ export default function Spinner() {
             <img src={spinner} alt="Loading..." className='h-24' />
         </div>
     </div>
-  )
+  );
 }

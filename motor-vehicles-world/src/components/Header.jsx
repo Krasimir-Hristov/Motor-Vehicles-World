@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+
 export default function Header() {
 
   const [pageState, setPageState] = useState('Sign in');
