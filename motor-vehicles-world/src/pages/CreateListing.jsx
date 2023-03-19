@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
+import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
+import { db } from '../firebase.config';
 
 export default function CreateListing() {
+  const navigate = useNavigate();
   const auth = getAuth();
 
-  const [geoLocationEnabled, setGeolocationEnabled] = useState(false);
+  const [geoLocationEnabled, setGeolocationEnabled] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +29,7 @@ export default function CreateListing() {
     immobilizer: false,
     location: "",
     description: "",
-    available: false,
+    discount: false,
     regularPrice: 0,
     discountedPrice: 0,
     latitude: 0,
@@ -46,7 +50,7 @@ export default function CreateListing() {
     immobilizer,
     location,
     description,
-    available,
+    discount,
     regularPrice,
     discountedPrice,
     latitude,
@@ -86,7 +90,7 @@ export default function CreateListing() {
     e.preventDefault();
     setLoading(true);
 
-    if (discountedPrice >= regularPrice) {
+    if (Number(discountedPrice) >= Number(regularPrice)) {
       setLoading(false);
       toast.error("Discounted price must be less then regular price!");
       return;
@@ -131,7 +135,7 @@ export default function CreateListing() {
   }, 
   (error) => {
     // Handle unsuccessful uploads
-    reject(error)
+    reject(error);
   }, 
   () => {
     // Handle successful uploads on complete
@@ -154,7 +158,21 @@ export default function CreateListing() {
       return;
     });
 
-    console.log(imgUrls);
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      timestamp: serverTimestamp()
+    };
+
+    delete formDataCopy.images;
+    !formDataCopy.discount && delete formDataCopy.discountedPrice;
+    delete formDataCopy.latitude;
+    delete formDataCopy.longitude;
+    const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+    setLoading(false);
+    toast.success('Listing created');
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
   if (loading) {
@@ -202,7 +220,7 @@ export default function CreateListing() {
           onChange={onChange}
           placeholder="Model"
           maxLength="32"
-          minLength="10"
+          minLength="1"
           required
           className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-600 rounded 
             transition duration-150 ease-in-out  focus:bg-slate-300  mb-6"
@@ -396,7 +414,7 @@ export default function CreateListing() {
             transition duration-150 ease-in-out focus:text-gray-700 focus:bg-slate-300  mb-6"
         />
 
-        {!geoLocationEnabled && (
+        {/* {!geoLocationEnabled && (
           <div className="flex space-x-6 justify-start mb-6">
             <div className="">
               <p className="text-lg font-semibold">Latitude</p>
@@ -428,7 +446,7 @@ export default function CreateListing() {
               />
             </div>
           </div>
-        )}
+        )} */}
 
         <p className="text-lg font-semibold">Description</p>
         <textarea
@@ -442,15 +460,15 @@ export default function CreateListing() {
           className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-600 rounded 
             transition duration-150 ease-in-out focus:text-gray-700 focus:bg-slate-300  mb-6"
         />
-        <p className="text-lg  font-semibold">Available</p>
+        <p className="text-lg  font-semibold">Discount</p>
         <div className="flex mb-6">
           <button
             type="button"
-            id="available"
+            id="discount"
             value={true}
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
-              !available
+              !discount
                 ? "bg-red-600 text-black line-through"
                 : "bg-green-600 text-white "
             }`}
@@ -459,11 +477,11 @@ export default function CreateListing() {
           </button>
           <button
             type="button"
-            id="available"
+            id="discount"
             value={false}
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
-              available
+              discount
                 ? "bg-red-600 text-black line-through"
                 : "bg-green-600 text-white "
             }`}
@@ -497,7 +515,7 @@ export default function CreateListing() {
             </div>
           </div>
         </div>
-        {available && (
+        {discount && (
           <div className="flex items-center mb-7">
             <div className="div">
               <p className="text-lg font-semibold">Discounted price</p>
@@ -509,7 +527,7 @@ export default function CreateListing() {
                   value={discountedPrice}
                   onChange={onChange}
                   min="1"
-                  required={available}
+                  required={discount}
                 />
                 {type === "rent" && (
                   <div className="text-white">
