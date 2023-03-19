@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Spinner from "../components/Spinner";
-import { toast } from "react-toastify";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { getAuth } from "firebase/auth";
-import { v4 as uuidv4 } from "uuid";
+import Spinner from '../components/Spinner';
+import { toast } from 'react-toastify';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { v4 as uuidv4 } from 'uuid';
 import { collection, serverTimestamp, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.config';
 
@@ -17,9 +17,9 @@ export default function CreateListing() {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    type: "rent",
-    model: "",
-    fuel: "",
+    type: 'rent',
+    model: '',
+    fuel: '',
     doors: 2,
     engine: 50,
     hp: 1,
@@ -27,8 +27,8 @@ export default function CreateListing() {
     navigation: false,
     parktronic: false,
     immobilizer: false,
-    location: "",
-    description: "",
+    location: '',
+    description: '',
     discount: false,
     regularPrice: 0,
     discountedPrice: 0,
@@ -61,11 +61,11 @@ export default function CreateListing() {
   function onChange(e) {
     let boolean = null;
 
-    if (e.target.value === "true") {
+    if (e.target.value === 'true') {
       boolean = true;
     }
 
-    if (e.target.value === "false") {
+    if (e.target.value === 'false') {
       boolean = false;
     }
 
@@ -92,13 +92,13 @@ export default function CreateListing() {
 
     if (Number(discountedPrice) >= Number(regularPrice)) {
       setLoading(false);
-      toast.error("Discounted price must be less then regular price!");
+      toast.error('Discounted price must be less then regular price!');
       return;
     }
 
     if (images.length > 6) {
       setLoading(false);
-      toast.error("Images must be maximum 6!");
+      toast.error('Images must be maximum 6!');
       return;
     }
 
@@ -154,7 +154,7 @@ export default function CreateListing() {
       .map((image) => storeImage(image)))
     .catch((error) => {
       setLoading(false);
-      toast.error("Images not uploaded");
+      toast.error('Images not uploaded');
       return;
     });
 
@@ -192,9 +192,9 @@ export default function CreateListing() {
             value="sell"
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
-              type === "rent"
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+              type === 'rent'
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             Sell
@@ -205,9 +205,9 @@ export default function CreateListing() {
             value="rent"
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
-              type === "sell"
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+              type === 'sell'
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             rent
@@ -233,8 +233,8 @@ export default function CreateListing() {
           value={fuel}
           onChange={onChange}
           placeholder="Fuel"
-          maxLength={"10"}
-          minLength={"3"}
+          maxLength={'10'}
+          minLength={'3'}
           required
           className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-600 rounded 
             transition duration-150 ease-in-out  focus:bg-slate-300  mb-6"
@@ -295,8 +295,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               !airCondition
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             yes
@@ -308,8 +308,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               airCondition
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             no
@@ -324,8 +324,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               !navigation
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             yes
@@ -337,8 +337,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               navigation
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             no
@@ -353,8 +353,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               !parktronic
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             yes
@@ -366,8 +366,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               parktronic
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             no
@@ -382,8 +382,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               !immobilizer
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             yes
@@ -395,8 +395,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               immobilizer
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             no
@@ -470,8 +470,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`mr-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               !discount
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             yes
@@ -483,8 +483,8 @@ export default function CreateListing() {
             onClick={onChange}
             className={`ml-3 px-7 py-3 font-medium text-sm uppercase rounded w-full ${
               discount
-                ? "bg-red-600 text-black line-through"
-                : "bg-green-600 text-white "
+                ? 'bg-red-600 text-black line-through'
+                : 'bg-green-600 text-white '
             }`}
           >
             no
@@ -503,7 +503,7 @@ export default function CreateListing() {
                 min="1"
                 required
               />
-              {type === "rent" && (
+              {type === 'rent' && (
                 <div className="text-white">
                   <p
                     className="text-md w-full text-white whitespace-nowrap text-xl 
@@ -530,7 +530,7 @@ export default function CreateListing() {
                   min="1"
                   required={discount}
                 />
-                {type === "rent" && (
+                {type === 'rent' && (
                   <div className="text-white">
                     <p
                       className="text-md w-full text-white whitespace-nowrap text-xl 
