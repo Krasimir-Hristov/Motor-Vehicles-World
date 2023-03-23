@@ -27,7 +27,7 @@ export default function CreateListing() {
     navigation: false,
     parktronic: false,
     immobilizer: false,
-    location: '',
+    address: '',
     description: '',
     discount: false,
     regularPrice: 0,
@@ -48,14 +48,14 @@ export default function CreateListing() {
     navigation,
     parktronic,
     immobilizer,
-    location,
+    address,
     description,
     discount,
     regularPrice,
     discountedPrice,
-    latitude,
-    longitude,
     images,
+    //latitude,
+    //longitude,
   } = formData;
 
   function onChange(e) {
@@ -103,12 +103,29 @@ export default function CreateListing() {
     }
 
     let geolocation = {};
-    // let location
+    let location;
 
-    if (!geoLocationEnabled) {
-      geolocation.lat = latitude;
-      geolocation.lng = longitude;
-    }
+    if (geoLocationEnabled) {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}
+      &key=${process.env.REACT_APP_GEOCODE_API_KEY}`);
+
+      const data = await response.json();
+      console.log(data);
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
+      location = data.status === 'ZERO_RESULTS' && undefined;
+
+      if(location === undefined) {
+        setLoading(false);
+        toast.error('Please enter a correct address!');
+        return;
+      }
+    } 
+    // else {
+    //   geolocation.lat = latitude;
+    //   geolocation.lng = longitude;
+    // }
 
     async function storeImage(image) {
         return new Promise((resolve, reject) => {
@@ -167,9 +184,8 @@ export default function CreateListing() {
     };
 
     delete formDataCopy.images;
+    
     !formDataCopy.discount && delete formDataCopy.discountedPrice;
-    delete formDataCopy.latitude;
-    delete formDataCopy.longitude;
     const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
     setLoading(false);
     toast.success('Listing created');
@@ -402,11 +418,11 @@ export default function CreateListing() {
             no
           </button>
         </div>
-        <p className="text-lg mt-6 font-semibold">Location</p>
+        <p className="text-lg mt-6 font-semibold">Address</p>
         <textarea
           type="text"
-          id="location"
-          value={location}
+          id="address"
+          value={address}
           onChange={onChange}
           placeholder="Location"
           minLength="10"

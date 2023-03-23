@@ -21,7 +21,7 @@ export default function ListingItem({ listing, id }) {
        <div className="w-full p-[10px]">
         <div className="flex items-center space-x-1 text-black">
             <MdLocationOn className='h-4 w-4 text-green-600' />
-            <p className='font-semibold mb-[2px] text-gray-600 truncate'>{listing.location}</p>
+            <p className='font-semibold mb-[2px] text-gray-600 truncate'>{listing.address}</p>
         </div>
         <p className='text-black font-semibold m-0 text-xl truncate'> {listing.model} </p>
         <p className='text-[#457b9d] mt-2 font-semibold'>${listing.discount ? listing.discountedPrice
