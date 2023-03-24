@@ -14,6 +14,7 @@ import Header from './components/Header';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           </Route> 
             
           
+          <Route path="*" element={ <PageNotFound /> } />
         </Routes>
       </Router>
       <ToastContainer
