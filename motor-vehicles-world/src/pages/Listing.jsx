@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase.config";
-import { getAuth } from "firebase/auth";
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase.config';
+import { getAuth } from 'firebase/auth';
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
   EffectFade,
   Autoplay,
   Navigation,
   Pagination,
-} from "swiper";
-import "swiper/css/bundle";
-import { FaShare } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { TbEngine } from "react-icons/tb";
-import { GiHorseHead } from "react-icons/gi";
-import { IoSnowSharp } from "react-icons/io5";
-import { FaMapMarked } from "react-icons/fa";
-import { TbParking } from "react-icons/tb";
-import { BsFillShieldLockFill } from "react-icons/bs";
+} from 'swiper';
+import 'swiper/css/bundle';
+import { FaShare } from 'react-icons/fa';
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { TbEngine } from 'react-icons/tb';
+import { GiHorseHead } from 'react-icons/gi';
+import { IoSnowSharp } from 'react-icons/io5';
+import { FaMapMarked } from 'react-icons/fa';
+import { TbParking } from 'react-icons/tb';
+import { BsFillShieldLockFill } from 'react-icons/bs';
 
-import Spinner from "../components/Spinner";
-import ContactOwner from "../components/ContactOwner";
+import Spinner from '../components/Spinner';
+import ContactOwner from '../components/ContactOwner';
 
 export default function Listing() {
   const auth = getAuth();
@@ -38,7 +38,7 @@ export default function Listing() {
 
   useEffect(() => {
     async function fetchListing() {
-      const docRef = doc(db, "listings", params.listingId);
+      const docRef = doc(db, 'listings', params.listingId);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -58,7 +58,7 @@ export default function Listing() {
       <Swiper
         slidesPerView={1}
         navigation
-        pagination={{ type: "progressbar" }}
+        pagination={{ type: 'progressbar' }}
         effect="fade"
         modules={[EffectFade]}
         autoplay={{ delay: 3000 }}
@@ -69,7 +69,7 @@ export default function Listing() {
               className="relative w-full overflow-hidden h-[300px]"
               style={{
                 background: `url(${listing.imgUrls[index]}) center no-repeat`,
-                backgroundSize: "cover",
+                backgroundSize: 'cover',
               }}
             ></div>
           </SwiperSlide>
@@ -108,15 +108,15 @@ export default function Listing() {
             className="text-black text-2xl 
                     font-bold mb-3 text-blue-900"
           >
-            {listing.model} - ${" "}
+            {listing.model} - ${' '}
             {listing.discount
               ? listing.discountedPrice
                   .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               : listing.regularPrice
                   .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            {listing.type === "rent" ? " / Day" : ""}
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {listing.type === 'rent' ? ' / Day' : ''}
           </p>
 
           <p className="text-black flex items-center mt-6 mb-3 font-semibold">
@@ -129,7 +129,7 @@ export default function Listing() {
               className="bg-red-800 w-full max-w-[200px] 
             rounded-md p-1 text-center font-semibold shadow-md"
             >
-              {listing.type === "rent" ? "Rent" : "Sale"}
+              {listing.type === 'rent' ? 'Rent' : 'Sale'}
             </p>
 
             {listing.discount && (
@@ -137,9 +137,9 @@ export default function Listing() {
                 className="text-white  w-full max-w-[200px] bg-green-800 p-1 
                 rounded-md text-center font-semibold shadow-md"
               >
-                ${" "}
-                {Number(listing.regularPrice) - Number(listing.discountedPrice)}{" "}
-                Discount{" "}
+                ${' '}
+                {Number(listing.regularPrice) - Number(listing.discountedPrice)}{' '}
+                Discount{' '}
               </p>
             )}
           </div>
@@ -160,22 +160,22 @@ export default function Listing() {
 
             <li className="text-black flex text-center items-center">
               <IoSnowSharp className="font-bold mr-1 text-xl" />
-              {listing.airCondition ? "Yes" : "No"}
+              {listing.airCondition ? 'Yes' : 'No'}
             </li>
 
             <li className="text-black flex text-center items-center">
               <FaMapMarked className="font-bold mr-1 text-xl" />
-              {listing.navigation ? "Yes" : "No"}
+              {listing.navigation ? 'Yes' : 'No'}
             </li>
 
             <li className="text-black flex text-center items-center">
               <TbParking className="font-bold mr-1 text-xl" />
-              {listing.parktronic ? "Yes" : "No"}
+              {listing.parktronic ? 'Yes' : 'No'}
             </li>
 
             <li className="text-black flex text-center items-center">
               <BsFillShieldLockFill className="font-bold mr-1 text-xl" />
-              {listing.immobilizer ? "Yes" : "No"}
+              {listing.immobilizer ? 'Yes' : 'No'}
             </li>
           </ul>
           {listing.userRef !== auth.currentUser?.uid && !contactOwner && (
