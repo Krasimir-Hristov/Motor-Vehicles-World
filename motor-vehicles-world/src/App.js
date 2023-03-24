@@ -1,17 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Offers from './pages/Offers';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import PrivetRoute from './components/PrivetRoute';
+import EditListing from './pages/EditListing';
 import ForgotPassword from './pages/ForgotPassword';
-import Offers from './pages/Offers';
-import Header from './components/Header';
 import CreateListing from './pages/CreateListing';
+import Listing from './pages/Listing';
+
+import PrivetRoute from './components/PrivetRoute';
+import Header from './components/Header';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import EditListing from './pages/EditListing';
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
 
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
+          <Route path="/category/:categoryName/:listingId" element={ <Listing />} />
           <Route path="/offers" element={ <Offers />} />
           
           <Route path='/create-listing' element={ <PrivetRoute/> }>

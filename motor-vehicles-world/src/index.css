@@ -6,3 +6,12 @@ body {
     background-color: black;
     color: white;
 }
+
+.swiper-button-next:after,
+.swiper-button-prev:after{
+    color: green;
+};
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+    background: green !important;
+}
