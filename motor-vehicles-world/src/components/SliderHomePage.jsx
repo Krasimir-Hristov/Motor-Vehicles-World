@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Spinner from "../components/Spinner";
+import Spinner from '../components/Spinner';
 
-import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { db } from "../firebase.config";
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { db } from '../firebase.config';
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {
   EffectFade,
   Autoplay,
   Navigation,
   Pagination,
-} from "swiper";
-import "swiper/css/bundle";
+} from 'swiper';
+import 'swiper/css/bundle';
 
 export default function SliderHomePage() {
   const [listings, setListings] = useState(null);
@@ -25,8 +25,8 @@ export default function SliderHomePage() {
 
   useEffect(() => {
     async function fetchListings() {
-      const listingsRef = collection(db, "listings");
-      const q = query(listingsRef, orderBy("timestamp", "desc"), limit(5));
+      const listingsRef = collection(db, 'listings');
+      const q = query(listingsRef, orderBy('timestamp', 'desc'), limit(5));
       const docSnap = await getDocs(q);
       let listings = [];
       docSnap.forEach((doc) => {
@@ -57,7 +57,7 @@ export default function SliderHomePage() {
         <Swiper
           slidesPerView={1}
           navigation
-          pagination={{ type: "progressbar" }}
+          pagination={{ type: 'progressbar' }}
           effect="fade"
           modules={ [ EffectFade ] }
           autoplay={{ delay: 3000 }}
@@ -70,7 +70,7 @@ export default function SliderHomePage() {
               <div
                 style={{
                   background: `url(${data.imgUrls[0]}) center, no-repeat`,
-                  backgroundSize: "cover",
+                  backgroundSize: 'cover',
                 }}
                 className="relative  w-full h-[300px] overflow-hidden"
               ></div>
@@ -81,7 +81,7 @@ export default function SliderHomePage() {
               <p className="text-[#f1faee] absolute left-1 bottom-1 
               font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">
                 ${data.discountedPrice ?? data.regularPrice}
-                {data.type == 'rent' && ' / Day'}
+                {data.type === 'rent' && ' / Day'}
                 </p>
             </SwiperSlide>
           ))}
