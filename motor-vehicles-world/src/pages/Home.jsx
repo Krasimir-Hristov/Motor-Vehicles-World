@@ -1,5 +1,13 @@
+import SliderHomePage from "../components/SliderHomePage";
+
+
 export default function Home() {
+
+
+
   return (
-    <div>Home</div>
+    <div>
+      <SliderHomePage />
+    </div>
   );
 }
