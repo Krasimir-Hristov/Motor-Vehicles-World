@@ -16,7 +16,7 @@ export default function Header() {
     useEffect( () => {
       onAuthStateChanged(auth, (user) => {
         if(user) {
-          setPageState('Profile');
+          setPageState(auth.currentUser.displayName);
         } else {
           setPageState('Sign in');
         }

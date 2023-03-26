@@ -5,13 +5,13 @@ import {
   orderBy,
   query,
   where,
-} from "firebase/firestore";
-import { db } from "../firebase.config";
+} from 'firebase/firestore';
+import { db } from '../firebase.config';
 
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import SliderHomePage from "../components/SliderHomePage";
+import SliderHomePage from '../components/SliderHomePage';
 import ListingItem from '../components/ListingItem';
 
 export default function Home() {
@@ -21,12 +21,12 @@ export default function Home() {
     async function fetchListings() {
       try {
         // get reference
-        const listingRef = collection(db, "listings");
+        const listingRef = collection(db, 'listings');
         // create query
         const q = query(
           listingRef,
-          where("discount", "==", true),
-          orderBy("timestamp", "desc"),
+          where('discount', '==', true),
+          orderBy('timestamp', 'desc'),
           limit(4)
         );
         // execute the query
@@ -56,12 +56,12 @@ export default function Home() {
     async function fetchListings() {
       try {
         // get reference
-        const listingRef = collection(db, "listings");
+        const listingRef = collection(db, 'listings');
         // create query
         const q = query(
           listingRef,
-          where("type", "==", 'rent'),
-          orderBy("timestamp", "desc"),
+          where('type', '==', 'rent'),
+          orderBy('timestamp', 'desc'),
           limit(4)
         );
         // execute the query
@@ -91,12 +91,12 @@ export default function Home() {
       async function fetchListings() {
         try {
           // get reference
-          const listingRef = collection(db, "listings");
+          const listingRef = collection(db, 'listings');
           // create query
           const q = query(
             listingRef,
-            where("type", "==", 'sell'),
-            orderBy("timestamp", "desc"),
+            where('type', '==', 'sell'),
+            orderBy('timestamp', 'desc'),
             limit(4)
           );
           // execute the query
