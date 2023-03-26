@@ -12,7 +12,7 @@ export default function CreateListing() {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  const [geoLocationEnabled, setGeolocationEnabled] = useState(true);
+  //const [geoLocationEnabled, setGeolocationEnabled] = useState(true);
 
   const [loading, setLoading] = useState(false);
 
@@ -54,8 +54,6 @@ export default function CreateListing() {
     regularPrice,
     discountedPrice,
     images,
-    latitude,
-    longitude,
   } = formData;
 
   function onChange(e) {
@@ -105,7 +103,7 @@ export default function CreateListing() {
     let geolocation = {};
     let location;
 
-    if (geoLocationEnabled) {
+   
       const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}
       &key=${process.env.REACT_APP_GEOCODE_API_KEY}`);
 
@@ -121,7 +119,7 @@ export default function CreateListing() {
         toast.error('Please enter a correct address!');
         return;
       }
-    } 
+    
     // else {
     //   geolocation.lat = latitude;
     //   geolocation.lng = longitude;
@@ -141,6 +139,7 @@ export default function CreateListing() {
     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log('Upload is ' + progress + '% done');
+    // eslint-disable-next-line default-case
     switch (snapshot.state) {
       case 'paused':
         console.log('Upload is paused');
