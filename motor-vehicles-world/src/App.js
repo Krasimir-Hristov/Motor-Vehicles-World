@@ -8,13 +8,14 @@ import EditListing from './pages/EditListing';
 import ForgotPassword from './pages/ForgotPassword';
 import CreateListing from './pages/CreateListing';
 import Listing from './pages/Listing';
+import Category from './pages/Category';
+import PageNotFound from './pages/PageNotFound';
 
 import PrivetRoute from './components/PrivetRoute';
 import Header from './components/Header';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
 
           <Route path="/category/:categoryName/:listingId" element={ <Listing />} />
           <Route path="/offers" element={ <Offers />} />
+          <Route path="/category/:categoryName" element={ <Category />} />
           
           <Route path='/create-listing' element={ <PrivetRoute/> }>
           <Route path="/create-listing" element={ <CreateListing /> } />
